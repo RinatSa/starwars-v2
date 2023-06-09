@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import {useEffect, useState} from "react";
 
-function List({selectId}) {
+function List({selectId, url}) {
 
     const [list, setList] = useState([])
 
@@ -10,7 +10,7 @@ function List({selectId}) {
     }, [])
 
     const getList = async () => {
-        const res = await fetch(`https://swapi.dev/api/people/`)
+        const res = await fetch(url)
         const data = await res.json()
         const list = data.results
         setList(list)

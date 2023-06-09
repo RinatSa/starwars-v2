@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import {useEffect, useState} from "react";
+import {Children, cloneElement, useEffect, useState} from "react";
 
-function Info({chosenItem, imgUrl, url}) {
+function Info({chosenItem, imgUrl, url, children}) {
 
     const [infoData, setInfoData] = useState({})
 
@@ -23,9 +23,9 @@ function Info({chosenItem, imgUrl, url}) {
             </div>
             <div>
                 <h1>{infoData.name}</h1>
-                <p>Population: 216451314354</p>
-                <p>Rotation Period: 15</p>
-                <p>Diametr: 5646546 km</p>
+                {Children.map(children, (child => {
+                    return cloneElement(child, {infoData})
+                }))}
             </div>
         </div>);
 }
