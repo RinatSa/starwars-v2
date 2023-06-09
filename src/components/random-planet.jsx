@@ -1,13 +1,19 @@
 import {useEffect, useState} from "react";
 import RandomPlanetInfo from "./random-planet-info.jsx";
+import Loader from "./loader.jsx";
+import ShowError from "./show-error.jsx";
 
 function RandomPlanet() {
 
+    // dodelat clearSetTimeout, ShowError
+
     const initialState = {name: null, population: null, diameter: null, rotation: null, id: null}
     const [randomPlanet, setRandomPlanet] = useState(initialState)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(false)
 
     useEffect(() => {
-        setInterval(getRandomPlanet, 5000)
+        setInterval(getRandomPlanet, 4000)
     }, [])
 
     const getRandomPlanet = async () => {
@@ -20,14 +26,16 @@ function RandomPlanet() {
             diameter: planet.diameter,
             rotation: planet.rotation_period,
             id: id
-        })
+        }, setLoading(false), setError(false))
     }
 
     return (
 
         <div className="row">
             <div className="col d-flex align-items-center">
-                <RandomPlanetInfo getRandomPlanet={randomPlanet}/>
+                {loading && <Loader/>}
+                {error && <ShowError/>}
+                {!(loading || error) ? <RandomPlanetInfo getRandomPlanet={randomPlanet}/> : null}
             </div>
         </div>);
 }
