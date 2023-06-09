@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import {useEffect, useState} from "react";
 
-function List() {
+function List({selectId}) {
 
     const [list, setList] = useState([])
 
@@ -18,7 +19,12 @@ function List() {
     return (
         <div className="col-5">
             <ul>
-                {list.map((item) => <li key={item.name}>{item.name}</li>)}
+                {list.map((item) => {
+                    const id = item.url.match(/\/([0-9]*)\/$/)[1]
+                    return <li key={item.name} onClick={() => {
+                        selectId(id)
+                    }}>{item.name}</li>
+                })}
             </ul>
         </div>);
 }
